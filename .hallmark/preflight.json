@@ -1,0 +1,12 @@
+{
+  "scannedAt": "2026-08-28",
+  "framework": "React 18 + Vite + Tailwind CSS 3",
+  "fontStackBefore": "Outfit",
+  "fontStackAfter": "Apple system stack with Windows fallback",
+  "motion": "CSS transitions plus morphicons icon transitions",
+  "paletteBefore": "teal public-sector palette",
+  "paletteAfter": "monochrome white and graphite with restrained green status accent",
+  "spacing": "Tailwind utilities plus 4pt CSS token scale",
+  "preserved": ["authentication", "role visibility", "API paths", "data columns", "empty/loading/error states"],
+  "redesignMode": "overhaul visual layer, preserve information architecture"
+}

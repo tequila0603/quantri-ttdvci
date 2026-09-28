@@ -1,0 +1,16 @@
+[
+  {
+    "date": "2026-08-28",
+    "macrostructure": "Utility rail / data canvas",
+    "theme": "Apple-inspired monochrome glass",
+    "enrichment": "none",
+    "brief": "Redesign Trung tâm Dịch vụ công ích admin frontend with white canvas, black type, compact pill rail and morphicons"
+  },
+  {
+    "date": "2026-08-28",
+    "macrostructure": "Operational split header",
+    "theme": "custom trust-first public sector",
+    "enrichment": "none",
+    "brief": "Trung tâm Dịch vụ công ích internal operations dashboard"
+  }
+]

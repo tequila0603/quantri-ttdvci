@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Đẩy sự cố Zalo sang Trung tâm DVCI",
+  "version": "1.0",
+  "description": "Tiếp nhận nhanh thông tin sự cố kỹ thuật từ Zalo Web vào Bảng điều hành Trung tâm",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://chat.zalo.me/*",
+    "http://localhost:3000/*",
+    "http://127.0.0.1:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.zalo.me/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "modal.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Cài đặt kết nối Hệ thống"
+  }
+}

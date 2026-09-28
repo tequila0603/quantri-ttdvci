@@ -1,0 +1,32 @@
+{
+  "name": "center-operations-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json && node -e \"const fs=require('fs'); if(fs.existsSync('src/premier-fallback.json')){fs.mkdirSync('dist',{recursive:true});fs.copyFileSync('src/premier-fallback.json','dist/premier-fallback.json');}\"",
+    "start": "node dist/server.js",
+    "test": "tsx --test test/**/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^10.0.2",
+    "@fastify/multipart": "^10.1.1",
+    "@fastify/rate-limit": "^10.2.2",
+    "bcryptjs": "^3.0.2",
+    "docx": "^9.7.1",
+    "fastify": "^5.2.1",
+    "kysely": "^0.29.6",
+    "pg": "^8.13.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/pg": "^8.11.10",
+    "kysely-codegen": "^0.20.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

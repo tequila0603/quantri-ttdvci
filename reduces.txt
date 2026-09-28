@@ -1,0 +1,67 @@
+ark.code)
+            const budget = parkProjects.reduce((sum, p) => sum + (p.estimatedBudget || 0), 0)
+            const disbursed = parkProjects.reduce((sum, p) => sum + (p.actualCost || 0), 0)
+           
+---
+0), 0)
+            const disbursed = parkProjects.reduce((sum, p) => sum + (p.actualCost || 0), 0)
+            const rate = budget > 0 ? (disbursed / budget) * 100 : 0
+            return {
+              park
+---
+
+            const offset = (rows.slice(0, index).reduce((sum, prev) => sum + prev.value, 0) / total) * 100
+            return (
+              <circle
+                key={row.label}
+                cx="60"
+
+---
+g }) => void
+        }) {
+    const total = parks.reduce((sum, p) => sum + p.enterpriseCount, 0);
+    const max = Math.max(1, ...parks.map((p) => p.enterpriseCount));
+    const sorted = [...parks].sort((a, b
+---
+arks;
+    const totalEnterprises = displayedParks.reduce((sum, p) => sum + p.enterpriseCount, 0);
+    const assets = assetsQuery.data ?? [];
+    const totalAssets = assets.length;
+    const operationalAssets
+---
+length;
+    const totalEstimatedBudget = projects.reduce((sum, p) => sum + (p.estimatedBudget || 0), 0);
+    const totalDisbursed = projects.reduce((sum, p) => sum + (p.actualCost || 0), 0);
+    const overal
+---
+et || 0), 0);
+    const totalDisbursed = projects.reduce((sum, p) => sum + (p.actualCost || 0), 0);
+    const overallDisbursementRate = totalEstimatedBudget > 0 ? (totalDisbursed / totalEstimatedBudget) * 10
+---
+aryRevenue = summaryQuery.data?.revenueByCategory.reduce((tot, row) => tot + numberValue(row.amount_due), 0);
+    const summaryDebt = summaryQuery.data ? numberValue(summaryQuery.data.receivables.amountOutst
+---
+: 10;
+    const avgValue = values.length ? values.reduce((sum, v) => sum + v, 0) / values.length : 0;
+    const limitInfo = useMemo(() => parseLimitInfo(points[0]?.limitText), [points]);
+    const width = 76
+---
+(() => {
+            return (data?.current ?? []).reduce((acc, snapshot) => {
+              const metric = snapshot.metrics.find((m) => m.code === 'FLOW_OUT_DAY')
+              return acc + (metric?.value ??
+---
+(() => {
+            return (data?.current ?? []).reduce((acc, snapshot) => {
+              const metric = snapshot.metrics.find((m) => m.code === 'FLOW_IN_DAY')
+              return acc + (metric?.value ?? 
+---
+berFormat('vi-VN').format((wasteQuery.data ?? []).reduce((sum, r) => sum + r.wastewaterM3, 0))} m³`}
+                    detail={`${wasteQuery.data?.length ?? 0} kỳ báo cáo đã xác nhận`}
+                    
+---
+berFormat('vi-VN').format((wasteQuery.data ?? []).reduce((sum, r) => sum + r.solidWasteKg, 0))} kg`}
+                    detail="Rác sinh hoạt & công nghiệp"
+                  />
+                  <MetricCar
+---
