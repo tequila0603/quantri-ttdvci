@@ -37,4 +37,4 @@ Các endpoint nghiệp vụ cần session cookie. `/health` và `/ready` là end
 
 ## Tài khoản
 
-Database đã có hai role `DIRECTOR` và `DATA_ADMIN`, nhưng chưa tạo username/password thật. Không đặt mật khẩu mặc định trong source; tài khoản sẽ được tạo ở bước bootstrap riêng.
+Khi API khởi động, schema chỉ được phục hồi tự động nếu PostgreSQL chưa có schema hay bảng ứng dụng; database có trạng thái dở dang sẽ làm API dừng để tránh ghi đè. Đây chỉ phục hồi cấu trúc; không chép dữ liệu nghiệp vụ hoặc seed từ Docker. Để tạo tài khoản ban đầu, đặt `CENTER_INITIAL_ACCOUNT_JSON` làm biến bí mật trên nền tảng triển khai, chứa đúng một tài khoản với username, display name, role (`DIRECTOR` hoặc `DATA_ADMIN`) và bcrypt hash. Sau khi triển khai tạo tài khoản, xóa biến này khỏi cấu hình triển khai. Không đưa mật khẩu/hash vào mã nguồn hoặc log.

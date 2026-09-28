@@ -6,6 +6,7 @@ import rateLimit from '@fastify/rate-limit'
 import type { AppConfig } from './config.js'
 import { loadConfig } from './config.js'
 import { createDatabase, type Database } from './db.js'
+import { bootstrapDatabase } from './db/bootstrap.js'
 import { createKyselyInstance } from './db/kysely.js'
 import { registerErrorHandler } from './errors.js'
 import { adminRoutes } from './routes/admin-routes.js'
@@ -33,8 +34,9 @@ export type AppOptions = {
 export async function buildApp(options: AppOptions = {}): Promise<FastifyInstance> {
   const config = options.config ?? loadConfig()
   const database = options.database ?? createDatabase(config)
-  const eventHub = options.eventHub ?? createEventHub(database)
   const ownsDatabase = !options.database
+  if (ownsDatabase) await bootstrapDatabase(database as ReturnType<typeof createDatabase>)
+  const eventHub = options.eventHub ?? createEventHub(database)
   const app = Fastify({
     logger: { level: config.nodeEnv === 'test' ? 'silent' : 'info' },
     bodyLimit: 1_048_576,

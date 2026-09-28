@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json && node -e \"const fs=require('fs'); if(fs.existsSync('src/premier-fallback.json')){fs.mkdirSync('dist',{recursive:true});fs.copyFileSync('src/premier-fallback.json','dist/premier-fallback.json');}\"",
+    "build": "tsc -p tsconfig.json && node -e \"const fs=require('fs');const path=require('path');for(const file of ['src/premier-fallback.json','src/db/recovered-local-schema.sql']){if(fs.existsSync(file)){const target=path.join('dist',path.relative('src',file));fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(file,target)}}\"",
     "start": "node dist/server.js",
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"

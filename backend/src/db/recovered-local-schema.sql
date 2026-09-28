@@ -2759,7 +2759,3 @@ ALTER TABLE ONLY workforce.tasks
 --
 -- PostgreSQL database dump complete
 --
-
-INSERT INTO core.schema_migrations (filename)
-VALUES ('001_initial_schema.sql')
-ON CONFLICT (filename) DO NOTHING;

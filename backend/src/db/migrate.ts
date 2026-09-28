@@ -9,25 +9,36 @@ const __dirname = path.dirname(__filename)
 
 async function runMigrations() {
   const migrationsDir = path.resolve(__dirname, '../../../db/migrations')
-  
-  // Create migrations table if not exists
-  await sql`
-    CREATE SCHEMA IF NOT EXISTS core;
-    CREATE TABLE IF NOT EXISTS core.schema_migrations (
-      id SERIAL PRIMARY KEY,
-      filename VARCHAR(255) NOT NULL UNIQUE,
-      applied_at TIMESTAMPTZ DEFAULT NOW()
-    )
+
+  const { rows: [state] } = await sql<{
+    hasLedger: boolean
+    hasApplicationSchemas: boolean
+  }>`
+    SELECT
+      to_regclass('core.schema_migrations') IS NOT NULL AS "hasLedger",
+      EXISTS (
+        SELECT 1 FROM pg_namespace
+        WHERE left(nspname, 3) <> 'pg_'
+          AND nspname NOT IN ('information_schema', 'public')
+      ) AS "hasApplicationSchemas"
   `.execute(kyselyDb)
+
+  if (!state?.hasLedger && state?.hasApplicationSchemas) {
+    throw new Error('Application schemas exist without a migration ledger; refusing to replay the initial schema')
+  }
+
+  let hasLedger = state?.hasLedger ?? false
   
   const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort()
-  
+
   for (const file of files) {
-    const applied = await kyselyDb.selectFrom('core.schema_migrations' as any)
-      .select('filename')
-      .where('filename', '=', file)
-      .executeTakeFirst()
-      
+    const applied = hasLedger
+      ? await kyselyDb.selectFrom('core.schema_migrations' as any)
+        .select('filename')
+        .where('filename', '=', file)
+        .executeTakeFirst()
+      : undefined
+
     if (!applied) {
       console.log(`Running migration: ${file}`)
       const filePath = path.join(migrationsDir, file)
@@ -37,7 +48,9 @@ async function runMigrations() {
         await sql.raw(content).execute(kyselyDb)
         await kyselyDb.insertInto('core.schema_migrations' as any)
           .values({ filename: file })
+          .onConflict((conflict) => conflict.column('filename').doNothing())
           .execute()
+        hasLedger = true
         console.log(`Successfully applied: ${file}`)
       } catch (err) {
         console.error(`Error applying migration ${file}:`, err)
